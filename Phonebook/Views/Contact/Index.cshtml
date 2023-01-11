@@ -1,0 +1,54 @@
+﻿@model Phonebook.Models.ViewModels.ContactViewModel
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-3">
+            <h2 class="text-primary">Contact List</h2>
+        </div>
+        <div class="col-6">
+            <form method="get">
+                <div class="text-center">
+                    <label>Name</label>
+                    <input asp-for="Name" class="form-control w-50" style="display:inline" />
+                    <input type="submit" class="btn btn-dark mb-1" value="Find" />
+                </div>
+            </form>
+        </div>
+        <div class="col-3" style="text-align:right">
+            <a asp-controller="Contact" asp-action="Create" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Create New Contact
+            </a>
+        </div>
+    </div>
+    <br />
+    @if (Model.contacts.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.contacts)
+                {
+                    <tr>
+                        <td width="50%">@item.Name</td>
+                        <td width="30%">@item.PhoneNumber</td>
+                        <td class="text-center">
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Contact" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary mx-2"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a asp-controller="Contact" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger mx-2"><i class="fa-solid fa-trash"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No contact exists</p>
+    }
+</div>
